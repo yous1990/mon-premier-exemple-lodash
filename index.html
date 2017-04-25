@@ -1,0 +1,59 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.js"></script>
+
+
+</head>
+<body>
+
+<div id="tableau_notes"></div>
+
+<button onClick="addStudent()">Ajouter Etudiant</button>
+<script>
+// Model === data
+    var etudiants = [
+        {idEtudiant: "12345", notes:{math:15, physiques:19}},
+        {idEtudiant: "5487345", notes:{math:10, physiques:16}},
+        {idEtudiant: "dzadza12345", notes:{math:15, physiques:20}}
+    ];
+
+//controller
+render();
+
+function showDetails(element){
+    console.log(element);
+}
+
+function addStudent() {
+    etudiants.push({idEtudiant: "zzzz", notes:{math:20, physiques:20}});
+    document.getElementById('tableau_notes').innerHTML = "";
+    render();
+}
+
+//vue === template
+function render(){
+    var compiled = _.template(
+            `<table style="width:100%">
+                <tr>
+                    <th>ID Etudiant</th>
+                    <th>Mathématique</th>
+                    <th>Physique</th>
+                </tr>
+                <% _.forEach(etudiants, function(el, index, arr){%>
+                    <tr onclick="showDetails(event)">
+                        <td><%- el.idEtudiant %></td>
+                        <td><%- el.notes.math %></td>
+                        <td><%- el.notes.physiques %></td>
+                    </tr><% }) %>
+            </table>`);
+
+    var rtat = compiled(etudiants);
+    document.getElementById('tableau_notes').innerHTML = rtat;
+}
+
+</script>
+</body>
+</html>
